@@ -4,14 +4,19 @@
 
 
 class player{
-private:
+private:	
+	sf::Sprite sprite;
 	sf::Texture texture;
-	sf::Sprite playerSprite;
 
 public:
-	
 	player(std::string imgDirectory);
 
-	void draw(sf::RenderWindow& window);
+	//Sprite Dimensions
+	int height;
+	int width;
+
+	void draw(sf::RenderWindow& window, float posX, float posY);
+
+	
 };
 

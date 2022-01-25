@@ -1,24 +1,17 @@
 #include "game.h"
 
-//Initialize in constructor 
-void game::initVar()
-{
-	window = nullptr;
-	
-}
 
-void game::initWindow()
-{
-	videoMode.height = 600;
-	videoMode.width = 800;
-	window = new sf::RenderWindow(sf::VideoMode(videoMode), "Window", sf::Style::Titlebar | sf::Style::Close);
-}
 
 //constructor / destructor
 game::game()
 {
-	initVar();
-	initWindow();
+	window = nullptr;
+
+	videoMode.height = int(height);
+	videoMode.width = int(width);
+
+	window = new sf::RenderWindow(sf::VideoMode(videoMode), "Window", sf::Style::Titlebar | sf::Style::Close);
+
 }
 
 game::~game()
@@ -51,7 +44,7 @@ void game::render()
 {
 	window->clear(sf::Color(25, 25, 25));
 	
-	p.draw(*window);
-
+	p.draw(*window, (width - p.width) / 2, (height - p.height) / 2);
+	
 	window->display();
 }

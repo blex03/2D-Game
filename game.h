@@ -10,8 +10,8 @@ private:
 	sf::VideoMode videoMode;
 	sf::Event event;
 
-	void initVar();
-	void initWindow();
+	float height = 600;
+	float width = 800;
 
 	//player
 	player p = player("assets/white_square.png");
