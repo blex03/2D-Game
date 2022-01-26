@@ -11,6 +11,8 @@ private:
 	float x_scale = 1;
 	float y_scale = 1;
 
+	float speed = 4;
+
 public:
 	player(std::string imgDirectory);
 
@@ -19,11 +21,11 @@ public:
 	int width;
 
 	//Sprite Position
-	float x;
+	float x; 
 	float y;
 
 	void draw(sf::RenderWindow& window, float posX, float posY);
 
-	
+	void update();
 };
 

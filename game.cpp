@@ -46,21 +46,11 @@ void game::pollEvent()
 
 void game::update()
 {
+	//window
 	pollEvent();
 
-	//Player
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		p.y -= 5;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		p.x -= 5;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		p.y += 5;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		p.x += 5;
-	}
+	//player
+	p.update();
 }
 
 void game::render()
