@@ -15,8 +15,10 @@ private:
 
 	//player
 	player p = player("assets/white_square.png");
+	
 
 public:
+
 	game();
 	~game();
 
