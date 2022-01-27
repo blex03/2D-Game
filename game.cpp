@@ -12,6 +12,7 @@ game::game()
 
 	window->setFramerateLimit(60);
 
+	
 	//player
 	p.x = width / 2;
 	p.y = height / 2;

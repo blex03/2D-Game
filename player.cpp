@@ -26,12 +26,12 @@ void player::update() {
 	
 
 	//NEW
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y >= 0 + height * 5/9) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x <= 800 - width * 5/9) {
 			y -= sqrt(pow(speed, 2) / 2);
 			x += sqrt(pow(speed, 2) / 2);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x >= 0 + width * 5/9) {
 			y -= sqrt(pow(speed, 2) / 2);
 			x -= sqrt(pow(speed, 2) / 2);
 		}
@@ -41,12 +41,12 @@ void player::update() {
 	}
 
 	//SEW
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y <= 600 - height * 5/9) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x <= 800 - width * 5/9) {
 			y += sqrt(pow(speed, 2) / 2);
 			x += sqrt(pow(speed, 2) / 2);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x >= 0 + width * 5/9) {
 			y += sqrt(pow(speed, 2) / 2);
 			x -= sqrt(pow(speed, 2) / 2);
 		}
@@ -56,12 +56,12 @@ void player::update() {
 	}
 
 	//W
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x >= 0 + width * 5/9) {
 		x -= speed;
 	}
 
 	//E
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x <= 800 - width * 5/9) {
 		x += speed;
 	}
 
