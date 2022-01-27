@@ -20,7 +20,6 @@ private:
 public:
 
 	game();
-	~game();
 
 	bool running();
 

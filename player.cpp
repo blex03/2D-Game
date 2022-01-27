@@ -22,18 +22,17 @@ void player::draw(sf::RenderWindow &window, float posX, float posY) {
 	window.draw(sprite);
 }
 
-void player::update() {
-	
-
+void player::movement()
+{
 	//NEW
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y >= 0 + height * 5/9) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x <= 800 - width * 5/9) {
-			y -= sqrt(pow(speed, 2) / 2);
-			x += sqrt(pow(speed, 2) / 2);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			y -= float(sqrt(pow(speed, 2) / 2));
+			x += float(sqrt(pow(speed, 2) / 2));
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x >= 0 + width * 5/9) {
-			y -= sqrt(pow(speed, 2) / 2);
-			x -= sqrt(pow(speed, 2) / 2);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			y -= float(sqrt(pow(speed, 2) / 2));
+			x -= float(sqrt(pow(speed, 2) / 2));
 		}
 		else {
 			y -= speed;
@@ -41,14 +40,14 @@ void player::update() {
 	}
 
 	//SEW
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y <= 600 - height * 5/9) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x <= 800 - width * 5/9) {
-			y += sqrt(pow(speed, 2) / 2);
-			x += sqrt(pow(speed, 2) / 2);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			y += float(sqrt(pow(speed, 2) / 2));
+			x += float(sqrt(pow(speed, 2) / 2));
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x >= 0 + width * 5/9) {
-			y += sqrt(pow(speed, 2) / 2);
-			x -= sqrt(pow(speed, 2) / 2);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			y += float(sqrt(pow(speed, 2) / 2));
+			x -= float(sqrt(pow(speed, 2) / 2));
 		}
 		else {
 			y += speed;
@@ -56,15 +55,40 @@ void player::update() {
 	}
 
 	//W
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x >= 0 + width * 5/9) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		x -= speed;
 	}
 
 	//E
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x <= 800 - width * 5/9) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		x += speed;
 	}
+}
 
+void player::collision(float windowX, float windowY)
+{
+	//window
+	if (x <= 0 + width / 2) {
+		x = 0 + width / 2;
+	}
 
+	if (x >= windowX - width / 2) {
+		x = windowX - width / 2;
+	}
 
+	if (y <= height / 2) {
+		y = height / 2;
+	}
+
+	if (y >= windowY - height / 2) {
+		y = windowY - height / 2;
+	}
+}
+
+void player::update(float x, float y) {
+	
+	movement();
+	collision(x, y);
+
+	
 }

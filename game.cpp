@@ -12,16 +12,9 @@ game::game()
 
 	window->setFramerateLimit(60);
 
-	
 	//player
 	p.x = width / 2;
 	p.y = height / 2;
-
-}
-
-game::~game()
-{
-	delete window;
 }
 
 //running
@@ -51,7 +44,7 @@ void game::update()
 	pollEvent();
 
 	//player
-	p.update();
+	p.update(width, height);
 }
 
 void game::render()
