@@ -1,6 +1,6 @@
 #include "game.h"
 
-//constructor / destructor
+//constructor
 game::game()
 {
 	window = nullptr;
@@ -55,7 +55,7 @@ void game::update()
 
 void game::render()
 {
-	window->clear(sf::Color(25, 25, 25));
+	window->clear(sf::Color(60, 60, 60));
 	
 	p.draw(*window, p.x, p.y);
 	

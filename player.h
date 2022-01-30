@@ -10,7 +10,7 @@ private:
 	float x_scale = 1;
 	float y_scale = 1;
 
-	float speed = 5;
+	float speed = 6;
 
 	void movement();
 	void collision(float windowX, float windowY);

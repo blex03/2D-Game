@@ -36,7 +36,6 @@ void player::movement()
 		else {
 			y -= speed;
 		}
-		
 	}
 
 	//SEW
@@ -52,7 +51,6 @@ void player::movement()
 		else {
 			y += speed;
 		}
-		
 	}
 
 	//W
@@ -127,13 +125,8 @@ void player::mousePosition(int mouseX, int mouseY)
 
 }
 
-
-
 void player::update(float x, float y, int mouseX, int mouseY) {
-	
 	movement();
 	collision(x, y);
 	mousePosition(mouseX, mouseY);
-
-	
 }
