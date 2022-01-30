@@ -2,7 +2,6 @@
 #include <iostream>
 #include <cmath>
 
-
 player::player(std::string imgDirectory) {
 	if (!texture.loadFromFile(imgDirectory)) {
 		std::cout << "Could not find texture" << std::endl;
@@ -37,6 +36,7 @@ void player::movement()
 		else {
 			y -= speed;
 		}
+		
 	}
 
 	//SEW
@@ -52,6 +52,7 @@ void player::movement()
 		else {
 			y += speed;
 		}
+		
 	}
 
 	//W
@@ -62,6 +63,7 @@ void player::movement()
 	//E
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		x += speed;
+		
 	}
 }
 
@@ -85,10 +87,53 @@ void player::collision(float windowX, float windowY)
 	}
 }
 
-void player::update(float x, float y) {
+void player::mousePosition(int mouseX, int mouseY)
+{
+	float relativeX = mouseX - x;
+	float relativeY = y - mouseY;
+	float ratio;
+
+	if (relativeY != 0) {
+		ratio = relativeX / relativeY;
+	}
+	else {
+		ratio = 0;
+	}
+
+	std::cout << relativeX << ", " << relativeY << ", " << ratio << std::endl;
+	
+	if (ratio != 0) {
+		//North
+		if ((ratio <= 1 || ratio >= -1) && relativeY > 0) {
+			texture.loadFromFile("assets/PlayerNorth.png");
+			sprite.setTexture(texture);
+		}
+		//South
+		if ((ratio <= 1 || ratio >= -1) && relativeY < 0) {
+			texture.loadFromFile("assets/PlayerSouth.png");
+			sprite.setTexture(texture);
+		}
+		//East
+		if ((ratio >= 1 || ratio <= -1) && relativeX > 0) {
+			texture.loadFromFile("assets/PlayerEast.png");
+			sprite.setTexture(texture);
+		}
+		//West
+		if ((ratio >= 1 || ratio <= -1) && relativeX < 0) {
+			texture.loadFromFile("assets/PlayerWest.png");
+			sprite.setTexture(texture);
+		}
+	}
+
+}
+
+
+
+void player::update(float x, float y, int mouseX, int mouseY) {
 	
 	movement();
 	collision(x, y);
+	mousePosition(mouseX, mouseY);
 
 	
 }

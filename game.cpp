@@ -33,18 +33,24 @@ void game::pollEvent()
 		case sf::Event::Closed:
 			window->close();
 			break;
-		
 		}
 	}
 }
 
 void game::update()
 {
+
+	//mouse position
+	int mouseX = sf::Mouse::getPosition(*window).x;
+	int mouseY = sf::Mouse::getPosition(*window).y;
+
 	//window
 	pollEvent();
 
 	//player
-	p.update(width, height);
+	p.update(width, height, mouseX, mouseY);
+
+	
 }
 
 void game::render()

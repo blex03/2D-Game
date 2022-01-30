@@ -5,7 +5,6 @@
 
 class game{
 private:
-
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event event;
@@ -14,11 +13,9 @@ private:
 	float width = 800;
 
 	//player
-	player p = player("assets/white_square.png");
+	player p = player("assets/PlayerSouth.png");
 	
-
 public:
-
 	game();
 
 	bool running();

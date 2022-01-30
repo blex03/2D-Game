@@ -2,7 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-
 class player{
 private:	
 	sf::Sprite sprite;
@@ -12,6 +11,10 @@ private:
 	float y_scale = 1;
 
 	float speed = 5;
+
+	void movement();
+	void collision(float windowX, float windowY);
+	void mousePosition(int mouseX, int mouseY);
 
 public:
 	player(std::string imgDirectory);
@@ -24,16 +27,7 @@ public:
 	float x = 0; 
 	float y = 0;
 
-	void setBounds(float width, float height) {
-
-	}
-
 	void draw(sf::RenderWindow& window, float posX, float posY);
-
-	void movement();
-
-	void collision(float windowX, float windowY);
-
-	void update(float windowX, float windowY);
+	void update(float windowX, float windowY, int mouseX, int mouseY);
 };
 
