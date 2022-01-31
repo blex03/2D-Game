@@ -13,7 +13,7 @@ private:
 	float width = 800;
 
 	//player
-	player p = player("assets/PlayerSouth.png");
+	player p = player("assets/NinjaSheet.png");
 	
 public:
 	game();

@@ -39,7 +39,6 @@ void game::pollEvent()
 
 void game::update()
 {
-
 	//mouse position
 	int mouseX = sf::Mouse::getPosition(*window).x;
 	int mouseY = sf::Mouse::getPosition(*window).y;
@@ -49,8 +48,6 @@ void game::update()
 
 	//player
 	p.update(width, height, mouseX, mouseY);
-
-	
 }
 
 void game::render()

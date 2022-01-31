@@ -7,15 +7,12 @@ player::player(std::string imgDirectory) {
 		std::cout << "Could not find texture" << std::endl;
 	}
 	sprite.setTexture(texture);
-
 	sprite.setScale(sf::Vector2f(x_scale, y_scale));
-
 }
 
 void player::draw(sf::RenderWindow &window, float posX, float posY) {
-	
-	height = texture.getSize().y * y_scale;
-	width = texture.getSize().x * x_scale;
+	height = sprite.getTextureRect().height * y_scale;
+	width = sprite.getTextureRect().width * x_scale;
 
 	sprite.setPosition(sf::Vector2f(posX - width/2, posY - height/2));
 	window.draw(sprite);
@@ -101,28 +98,24 @@ void player::mousePosition(int mouseX, int mouseY)
 	std::cout << relativeX << ", " << relativeY << ", " << ratio << std::endl;
 	
 	if (ratio != 0) {
-		//North
-		if ((ratio <= 1 || ratio >= -1) && relativeY > 0) {
-			texture.loadFromFile("assets/PlayerNorth.png");
-			sprite.setTexture(texture);
-		}
+		
 		//South
 		if ((ratio <= 1 || ratio >= -1) && relativeY < 0) {
-			texture.loadFromFile("assets/PlayerSouth.png");
-			sprite.setTexture(texture);
+			sprite.setTextureRect(sf::IntRect(0, 0, 50, 80));
 		}
-		//East
-		if ((ratio >= 1 || ratio <= -1) && relativeX > 0) {
-			texture.loadFromFile("assets/PlayerEast.png");
-			sprite.setTexture(texture);
+		//North
+		if ((ratio <= 1 || ratio >= -1) && relativeY > 0) {
+			sprite.setTextureRect(sf::IntRect(50, 0, 50, 80));
 		}
 		//West
 		if ((ratio >= 1 || ratio <= -1) && relativeX < 0) {
-			texture.loadFromFile("assets/PlayerWest.png");
-			sprite.setTexture(texture);
+			sprite.setTextureRect(sf::IntRect(100, 0, 50, 80));
 		}
+		//East
+		if ((ratio >= 1 || ratio <= -1) && relativeX > 0) {
+			sprite.setTextureRect(sf::IntRect(150, 0, 50, 80));
+		}	
 	}
-
 }
 
 void player::update(float x, float y, int mouseX, int mouseY) {
