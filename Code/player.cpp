@@ -84,12 +84,37 @@ void player::collision(float windowX, float windowY)
 
 void player::mousePosition(int mouseX, int mouseY)
 {
+	//convert degrees to radians
+	float rad = (atan(1) * 4) / 180;
+
 	float relativeX = mouseX - x;
 	float relativeY = y - mouseY;
 	float ratio;
 
-	if (relativeY != 0) {
-		ratio = relativeX / relativeY;
+	bool quad1 = false;
+	bool quad2 = false;
+	bool quad3 = false;
+	bool quad4 = false;
+
+	if (relativeX > 0 && relativeY > 0) {
+		quad1 = true;
+		std::cout << "QUAD[1]";
+	}
+	if (relativeX < 0 && relativeY > 0) {
+		quad2 = true;
+		std::cout << "QUAD[2]";
+	}
+	if (relativeX < 0 && relativeY < 0) {
+		quad3 = true;
+		std::cout << "QUAD[3]";
+	}
+	if (relativeX > 0 && relativeY < 0) {
+		quad4 = true;
+		std::cout << "QUAD[4]";
+	}
+
+	if (relativeX != 0) {
+		ratio = relativeY / relativeX;
 	}
 	else {
 		ratio = 0;
@@ -99,22 +124,44 @@ void player::mousePosition(int mouseX, int mouseY)
 	
 	if (ratio != 0) {
 		
-		//South
-		if ((ratio <= 1 || ratio >= -1) && relativeY < 0) {
+		//S
+		if (ratio <= tan(292.5 * rad) && quad4 || ratio >= tan(247.5 * rad) && quad3) {
 			sprite.setTextureRect(sf::IntRect(0, 0, 50, 80));
 		}
-		//North
-		if ((ratio <= 1 || ratio >= -1) && relativeY > 0) {
+
+		//SW
+		if ((ratio < tan(247.5 * rad) && ratio > tan(202.5 * rad)) && quad3) {
 			sprite.setTextureRect(sf::IntRect(50, 0, 50, 80));
 		}
-		//West
-		if ((ratio >= 1 || ratio <= -1) && relativeX < 0) {
+
+		//W
+		if (ratio <= tan(202.5 * rad) && quad3 || ratio >= tan(157.5 * rad) && quad2) {
 			sprite.setTextureRect(sf::IntRect(100, 0, 50, 80));
 		}
-		//East
-		if ((ratio >= 1 || ratio <= -1) && relativeX > 0) {
+
+		//NW
+		if ((ratio < tan(157.5 * rad) && ratio > tan(112.5 * rad)) && quad2) {
 			sprite.setTextureRect(sf::IntRect(150, 0, 50, 80));
-		}	
+		}
+		//N
+		if (ratio <= tan(112.5 * rad) && quad2|| ratio >= tan(67.5 * rad) && quad1) {
+			sprite.setTextureRect(sf::IntRect(200, 0, 50, 80));
+		}
+
+		//NE
+		if ((ratio < tan(67.5 * rad) && ratio > tan(22.5 * rad)) && quad1) {
+			sprite.setTextureRect(sf::IntRect(250, 0, 50, 80));
+		}
+
+		//E
+		if (ratio <= tan(22.5 * rad) && quad1 || ratio >= tan(337.5 * rad) && quad4) {
+			sprite.setTextureRect(sf::IntRect(300, 0, 50, 80));
+		}
+
+		//SE
+		if ((ratio < tan(337.5 * rad) && ratio > tan(292.5 * rad)) && quad4) {
+			sprite.setTextureRect(sf::IntRect(350, 0, 50, 80));
+		}
 	}
 }
 
