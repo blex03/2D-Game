@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#include "player.h"
+#include "character.h"
 
 class game{
 private:
@@ -13,7 +12,8 @@ private:
 	float width = 800;
 
 	//player
-	player p = player("assets/NinjaSheet.png");
+	character player = character("assets/NinjaSheet.png");
+	attack basic = attack("assets/Attack.png");
 	
 public:
 	game();

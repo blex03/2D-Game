@@ -13,8 +13,10 @@ game::game()
 	window->setFramerateLimit(60);
 
 	//player
-	p.x = width / 2;
-	p.y = height / 2;
+	player.pos.x = width / 2;
+	player.pos.y = height / 2;
+
+	
 }
 
 //running
@@ -47,14 +49,21 @@ void game::update()
 	pollEvent();
 
 	//player
-	p.update(width, height, mouseX, mouseY);
+	player.update(width, height);
+	player.direction(mouseX, mouseY);
+
+	//attack
+	basic.pos.x = player.pos.x - 50;
+	basic.pos.y = player.pos.y;
+	
 }
 
 void game::render()
 {
 	window->clear(sf::Color(60, 60, 60));
 	
-	p.draw(*window, p.x, p.y);
+	player.render(*window, player.pos.x, player.pos.y);
+	basic.render(*window, basic.pos.x, basic.pos.y);
 	
 	window->display();
 }

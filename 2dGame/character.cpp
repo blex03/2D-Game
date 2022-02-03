@@ -1,94 +1,92 @@
-#include "player.h"
-#include <iostream>
-#include <cmath>
+#include "character.h"
 
-player::player(std::string imgDirectory) {
-	if (!texture.loadFromFile(imgDirectory)) {
-		std::cout << "Could not find texture" << std::endl;
-	}
+//constructors
+character::character(std::string imgDirectory) {
+	texture.loadFromFile(imgDirectory);
 	sprite.setTexture(texture);
-	sprite.setScale(sf::Vector2f(x_scale, y_scale));
+	sprite.setScale(sf::Vector2f(scale.x, scale.y));
 }
 
-void player::draw(sf::RenderWindow &window, float posX, float posY) {
-	height = sprite.getTextureRect().height * y_scale;
-	width = sprite.getTextureRect().width * x_scale;
+//functions
+void character::render(sf::RenderWindow &window, float posX, float posY) {
+	size.y = sprite.getTextureRect().height * scale.y;
+	size.x = sprite.getTextureRect().width * scale.x;
 
-	sprite.setPosition(sf::Vector2f(posX - width/2, posY - height/2));
+	sprite.setPosition(sf::Vector2f(posX - size.x/2, posY - size.y/2));
 	window.draw(sprite);
 }
 
-void player::movement()
+void character::movement()
 {
 	//NEW
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			y -= float(sqrt(pow(speed, 2) / 2));
-			x += float(sqrt(pow(speed, 2) / 2));
+			pos.y -= float(sqrt(pow(speed, 2) / 2));
+			pos.x += float(sqrt(pow(speed, 2) / 2));
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			y -= float(sqrt(pow(speed, 2) / 2));
-			x -= float(sqrt(pow(speed, 2) / 2));
+			pos.y -= float(sqrt(pow(speed, 2) / 2));
+			pos.x -= float(sqrt(pow(speed, 2) / 2));
 		}
 		else {
-			y -= speed;
+			pos.y -= speed;
 		}
 	}
 
 	//SEW
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			y += float(sqrt(pow(speed, 2) / 2));
-			x += float(sqrt(pow(speed, 2) / 2));
+			pos.y += float(sqrt(pow(speed, 2) / 2));
+			pos.x += float(sqrt(pow(speed, 2) / 2));
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			y += float(sqrt(pow(speed, 2) / 2));
-			x -= float(sqrt(pow(speed, 2) / 2));
+			pos.y += float(sqrt(pow(speed, 2) / 2));
+			pos.x -= float(sqrt(pow(speed, 2) / 2));
 		}
 		else {
-			y += speed;
+			pos.y += speed;
 		}
 	}
 
 	//W
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		x -= speed;
+		pos.x -= speed;
 	}
 
 	//E
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		x += speed;
+		pos.x += speed;
 		
 	}
 }
 
-void player::collision(float windowX, float windowY)
+void character::collision(float windowX, float windowY)
 {
 	//window
-	if (x <= 0 + width / 2) {
-		x = 0 + width / 2;
+	if (pos.x <= 0 + size.x / 2) {
+		pos.x = 0 + size.x / 2;
 	}
 
-	if (x >= windowX - width / 2) {
-		x = windowX - width / 2;
+	if (pos.x >= windowX - size.x / 2) {
+		pos.x = windowX - size.y / 2;
 	}
 
-	if (y <= height / 2) {
-		y = height / 2;
+	if (pos.y <= size.y / 2) {
+		pos.y = size.y / 2;
 	}
 
-	if (y >= windowY - height / 2) {
-		y = windowY - height / 2;
+	if (pos.y >= windowY - size.y / 2) {
+		pos.y = windowY - size.y / 2;
 	}
 }
 
-void player::mousePosition(int mouseX, int mouseY)
+void character::direction(int mouseX, int mouseY)
 {
 	//convert degrees to radians
-	float rad = (atan(1) * 4) / 180;
+	double rad = (atan(1) * 4) / 180;
 
-	float relativeX = mouseX - x;
-	float relativeY = y - mouseY;
+	float relativeX = mouseX - pos.x;
+	float relativeY = pos.y - mouseY;
 	float ratio;
 
 	bool quad1 = false;
@@ -165,8 +163,8 @@ void player::mousePosition(int mouseX, int mouseY)
 	}
 }
 
-void player::update(float x, float y, int mouseX, int mouseY) {
+void character::update(float x, float y) {
 	movement();
 	collision(x, y);
-	mousePosition(mouseX, mouseY);
 }
+
