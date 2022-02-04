@@ -35,6 +35,10 @@ void game::pollEvent()
 		case sf::Event::Closed:
 			window->close();
 			break;
+		
+		case sf::Event::MouseButtonPressed:
+			
+			break;
 		}
 	}
 }
@@ -49,13 +53,11 @@ void game::update()
 	pollEvent();
 
 	//player
-	player.update(width, height);
-	player.direction(mouseX, mouseY);
+	player.update(width, height, mouseX, mouseY);
 
 	//attack
-	basic.pos.x = player.pos.x - 50;
-	basic.pos.y = player.pos.y;
-	
+	basic.update(player.pos.x, player.pos.y, mouseX, mouseY);
+
 }
 
 void game::render()
@@ -63,7 +65,11 @@ void game::render()
 	window->clear(sf::Color(60, 60, 60));
 	
 	player.render(*window, player.pos.x, player.pos.y);
-	basic.render(*window, basic.pos.x, basic.pos.y);
+
 	
+	if (basic.click()) {
+		basic.render(*window, basic.pos.x, basic.pos.y);
+	}
+
 	window->display();
 }

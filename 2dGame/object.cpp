@@ -1,14 +1,13 @@
-#include "character.h"
+#include "object.h"
 
-//constructors
-character::character(std::string imgDirectory) {
+//object
+object::object(std::string imgDirectory) {
 	texture.loadFromFile(imgDirectory);
 	sprite.setTexture(texture);
 	sprite.setScale(sf::Vector2f(scale.x, scale.y));
 }
 
-//functions
-void character::render(sf::RenderWindow &window, float posX, float posY) {
+void object::render(sf::RenderWindow &window, float posX, float posY) {
 	size.y = sprite.getTextureRect().height * scale.y;
 	size.x = sprite.getTextureRect().width * scale.x;
 
@@ -16,6 +15,7 @@ void character::render(sf::RenderWindow &window, float posX, float posY) {
 	window.draw(sprite);
 }
 
+//character
 void character::movement()
 {
 	//NEW
@@ -68,7 +68,7 @@ void character::collision(float windowX, float windowY)
 	}
 
 	if (pos.x >= windowX - size.x / 2) {
-		pos.x = windowX - size.y / 2;
+		pos.x = windowX - size.x / 2;
 	}
 
 	if (pos.y <= size.y / 2) {
@@ -94,21 +94,18 @@ void character::direction(int mouseX, int mouseY)
 	bool quad3 = false;
 	bool quad4 = false;
 
+	//Mouse Quadrant with Character at origin
 	if (relativeX > 0 && relativeY > 0) {
 		quad1 = true;
-		std::cout << "QUAD[1]";
 	}
 	if (relativeX < 0 && relativeY > 0) {
 		quad2 = true;
-		std::cout << "QUAD[2]";
 	}
 	if (relativeX < 0 && relativeY < 0) {
 		quad3 = true;
-		std::cout << "QUAD[3]";
 	}
 	if (relativeX > 0 && relativeY < 0) {
 		quad4 = true;
-		std::cout << "QUAD[4]";
 	}
 
 	if (relativeX != 0) {
@@ -117,8 +114,6 @@ void character::direction(int mouseX, int mouseY)
 	else {
 		ratio = 0;
 	}
-
-	std::cout << relativeX << ", " << relativeY << ", " << ratio << std::endl;
 	
 	if (ratio != 0) {
 		
@@ -163,8 +158,35 @@ void character::direction(int mouseX, int mouseY)
 	}
 }
 
-void character::update(float x, float y) {
+void character::update(float x, float y, int mouseX, int mouseY) {
 	movement();
 	collision(x, y);
+	direction(mouseX, mouseY);
+}
+
+//attack
+bool attack::click() {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void attack::direction(float playerX, float playerY, int mouseX, int mouseY) {
+	float relativeX = mouseX - playerX;
+	float relativeY = playerY - mouseY;
+	float ratio;
+
+	float circle_size = sqrt(pow(relativeX, 2) + pow(relativeY, 2));
+	float circle_factor = circle_size / radius;
+
+	pos.x = playerX + relativeX / circle_factor;
+	pos.y = playerY - relativeY / circle_factor;
+}
+
+void attack::update(float playerX, float playerY, int mouseX, int mouseY) {
+	direction(playerX, playerY, mouseX, mouseY);
 }
 
