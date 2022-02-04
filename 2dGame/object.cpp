@@ -8,8 +8,8 @@ object::object(std::string imgDirectory) {
 }
 
 void object::render(sf::RenderWindow &window, float posX, float posY) {
-	size.y = sprite.getTextureRect().height * scale.y;
-	size.x = sprite.getTextureRect().width * scale.x;
+	size.y = sprite.getLocalBounds().height * scale.y;
+	size.x = sprite.getLocalBounds().width * scale.x;
 
 	sprite.setPosition(sf::Vector2f(posX - size.x/2, posY - size.y/2));
 	window.draw(sprite);
@@ -175,15 +175,37 @@ bool attack::click() {
 }
 
 void attack::direction(float playerX, float playerY, int mouseX, int mouseY) {
+	sprite.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
+
+	//Position
 	float relativeX = mouseX - playerX;
 	float relativeY = playerY - mouseY;
 	float ratio;
+	if (relativeX != 0) {
+		ratio = relativeY / relativeX;
+	}
+	else {
+		ratio = 0;
+	}
 
 	float circle_size = sqrt(pow(relativeX, 2) + pow(relativeY, 2));
 	float circle_factor = circle_size / radius;
 
-	pos.x = playerX + relativeX / circle_factor;
-	pos.y = playerY - relativeY / circle_factor;
+	pos.x = playerX + relativeX / circle_factor + 15;
+	pos.y = playerY - (relativeY / circle_factor) + 25;
+
+	//Angle
+	float radians = atan(ratio);
+	float degrees = radians * (180 / (atan(1) * 4));
+
+	if (relativeX < 0) {
+		rotation = -degrees;
+	}
+	else if (relativeX > 0) {
+		rotation = -degrees - 180;
+	}
+	
+	sprite.setRotation(rotation);
 }
 
 void attack::update(float playerX, float playerY, int mouseX, int mouseY) {
