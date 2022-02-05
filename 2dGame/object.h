@@ -7,7 +7,6 @@ class object{
 protected:	
 	sf::Sprite sprite;
 	sf::Texture texture;
-	sf::Event event;
 
 	struct measure {
 		float x;
@@ -34,6 +33,8 @@ private:
 	void movement();
 	void collision(float windowX, float windowY);
 
+	measure scale = { 5, 5 };
+
 public:
 	void update(float windowX, float windowY, int mouseX, int mouseY);
 };
@@ -45,6 +46,8 @@ private:
 
 	float radius = 75;
 	float rotation = 0;
+
+	
 
 public:
 	//Is attack activated?
